@@ -1,4 +1,7 @@
-import { StatusBarProps } from "../../shared/interfaces/status-bar.interface"
+interface StatusBarProps {
+    progress: number;
+    total: number;
+}
 
 export const StatusBar = ({progress, total}: StatusBarProps) => {
     const PROGRESS_MULTIPLY = 100 / total;

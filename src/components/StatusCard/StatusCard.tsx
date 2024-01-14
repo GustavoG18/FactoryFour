@@ -3,12 +3,15 @@ import ErrorIcon from "../../shared/assets/error-icon.svg"
 
 import { useQuery } from 'react-query';
 
-import { ErrorFetch, ResponseFetch, StatusCardProps } from "../../shared/interfaces/status-card.interface";
 import { useEffect } from "react";
+import { ErrorFetch, ResponseFetch } from "../../shared/interfaces/status-card.interface";
 
-import "./StatusCard.css"
+interface StatusCardProps {
+  apiName: string; 
+  actionRefecth: boolean;
+}
 
-export const StatusCard = ({ apiName, actionRefecth }:StatusCardProps) => {
+export const StatusCard = ({ apiName, actionRefecth }: StatusCardProps) => {
     const { data, error, isLoading, refetch } = useQuery<ResponseFetch, ErrorFetch>(['data', apiName], () => {
         return fetch(`${process.env.REACT_APP_API_URL}${apiName}/health/status`).then((res):Promise<ResponseFetch> => {
           return res.json();
@@ -42,7 +45,7 @@ export const StatusCard = ({ apiName, actionRefecth }:StatusCardProps) => {
           {
             isLoading? 
               <div 
-                className="bg-slate-700 rounded-full loading-img">
+                className="bg-slate-700 rounded-full w-[65px] h-[65px]">
               </div>:
               <img 
                 width={80}
@@ -83,13 +86,13 @@ export const StatusCard = ({ apiName, actionRefecth }:StatusCardProps) => {
           }
           {
             isLoading? 
-              <div className="rounded-full bg-slate-500 loading-div"></div>
+              <div className="rounded-full bg-slate-500 w-full h-[20px]"></div>
               :
               <p className="text-base text-ellipsis overflow-hidden ">{error?.message ? "Outage": data?.hostname}</p>
           }
           {
             isLoading? 
-              <div className="rounded-full bg-slate-500 loading-div"></div>
+              <div className="rounded-full bg-slate-500 w-full h-[20px]"></div>
               :
               <p className="text-base text-ellipsis overflow-hidden ">{error?.message ? "403 Forbidden": data?.time}</p>
           }
