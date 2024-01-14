@@ -1,18 +1,7 @@
-import { useEffect, useState } from "react";
+import { StatusBarProps } from "../../shared/interfaces/status-bar.interface"
 
-export const StatusBar = () => {
-    const [progress, setProgress] = useState(0);
-
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            if(progress === 100){
-                setProgress(0);
-            }else {
-                setProgress((prev) => prev + 1);
-            }
-          }, 145);
-          return () => clearInterval(intervalId);
-    })
+export const StatusBar = ({progress, total}: StatusBarProps) => {
+    const PROGRESS_MULTIPLY = 100 / total;
 
     return (
         <div className="
@@ -28,7 +17,7 @@ export const StatusBar = () => {
                 leading-none
                 p-6
                 "
-                style={{ width: `${progress}%` }}
+                style={{ width: `${progress * PROGRESS_MULTIPLY}%` }}
             ></div>
         </div>
     )
