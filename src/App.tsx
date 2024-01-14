@@ -1,10 +1,10 @@
 import './App.css';
 import { useEffect, useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 import { StatusBar } from './components/StatusBar/StatusBar';
 import { StatusCard } from './components/StatusCard/StatusCard';
 
-import { QueryClient, QueryClientProvider } from 'react-query'
 import { API_NAMES_LIST } from './shared/constants/api-names-list';
 
 const queryClient = new QueryClient()
@@ -29,8 +29,12 @@ const App = () => {
       <StatusBar progress={timer} total={SECONDS}/>
       <div className="container mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {API_NAMES_LIST.map((name: string) => {
-            return <StatusCard apiName={name} actionRefecth={timer === SECONDS}/>
+          {API_NAMES_LIST.map((name: string, index) => {
+            return <StatusCard 
+              key={`${index}-${name}`} 
+              apiName={name} 
+              actionRefecth={timer === SECONDS}
+            />
           })}
         </div>
       </div>
